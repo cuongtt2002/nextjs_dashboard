@@ -94,7 +94,10 @@ export default function UserForm({ id, isOpen, setId, onClose, mode }: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && reset()}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent
+        className="sm:max-w-[500px]"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>
             {mode === "edit"
