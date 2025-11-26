@@ -18,6 +18,7 @@ export default function UserTable() {
   const [id, setId] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isRefreshList, setIsRefreshList] = useState(false);
+  const [mode, setMode] = useState<string>("");
 
   useEffect(() => {
     setUsers(userService.getAll());
@@ -33,12 +34,14 @@ export default function UserTable() {
   const openAdd = () => {
     setId("");
     setIsOpen(true);
+    setMode("create");
   };
 
   const openEdit = (id: string) => {
     if (!id) return;
     setId(id);
     setIsOpen(true);
+    setMode("edit");
   };
 
   const deleteUser = (id: string) => {
@@ -109,6 +112,7 @@ export default function UserTable() {
           setId={setId}
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
+          mode={mode}
         />
       </div>
     </TableContext.Provider>

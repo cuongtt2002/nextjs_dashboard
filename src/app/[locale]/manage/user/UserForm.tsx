@@ -27,6 +27,7 @@ type Props = {
   isOpen: boolean;
   setId: (id: string) => void;
   onClose: () => void;
+  mode: string;
 };
 
 const schema = z.object({
@@ -37,7 +38,7 @@ const schema = z.object({
   age: z.number().min(0, { message: "age_min" }),
 });
 
-export default function UserForm({ id, isOpen, setId, onClose }: Props) {
+export default function UserForm({ id, isOpen, setId, onClose, mode }: Props) {
   const { setIsRefreshList } = useContext(TableContext);
   const t = useTranslations();
 
@@ -52,7 +53,11 @@ export default function UserForm({ id, isOpen, setId, onClose }: Props) {
 
   useEffect(() => {
     if (!id) {
-      form.reset();
+      form.reset({
+        name: "",
+        email: "",
+        age: 0,
+      });
       return;
     }
 
@@ -92,7 +97,9 @@ export default function UserForm({ id, isOpen, setId, onClose }: Props) {
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>
-            {id ? t("user_form_title_update") : t("user_form_title_add_new")}
+            {mode === "edit"
+              ? t("user_form_title_update")
+              : t("user_form_title_add_new")}
           </DialogTitle>
         </DialogHeader>
 
